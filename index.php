@@ -20,7 +20,7 @@ $A = $_->getall($con);
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,  shrink-to-fit=no">
 <!-- <meta name="viewport" content="width=device-width"> -->
-<title>Bootstrap 4 List Group with Linked Items</title>
+<title>MTN Bright Scholars | Phone Confirmation</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
