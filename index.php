@@ -75,7 +75,7 @@ for ($i=0; $i < count($A); $i++) {
             <p class="card-text">Total: <span class="badge badge-warning text-white float-right"><?php echo count($A); ?></span></p>
             <p class="card-text">Confirmed: <span class="badge badge-warning text-white float-right"><?php echo $confirmed; ?></span></p>
             <p class="card-text">Unconfirmed: <span class="badge badge-warning text-white float-right"><?php echo count($A)-$confirmed ?></span></p>
-            <a href="./index.php?download=1" class="btn btn-warning text-light">Download List</a>
+            <a href="./index.php?download=1" class="btn btn-warning text-light">Download Updated List</a>
         </div>
     </div>
 
