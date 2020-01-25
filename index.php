@@ -4,6 +4,26 @@ include 'users.php';
 $phone = "";
 $_ = new Users();
 
+if(isset($_GET["download"])){
+  $all_students = $_->getall($con);  
+  $data = "#,Name,Phone,Confirmed\n";
+  for ($i=0; $i < count($all_students); $i++) { 
+      $__ = $all_students[$i];
+      $confirmed = "No";
+      if(intval($__->confirmed) == 1){
+        $confirmed = "Yes";
+      }
+      $line = strval($i+1) . "," .  $__->name.",".$__->phone.",".$confirmed."\n";
+      $data = $data . $line;
+  } 
+  header('Content-Disposition: attachment; filename="file.csv"');
+  header('Content-Type: text/plain'); # Don't use application/force-download - it's not a real MIME type, and the Content-Disposition header is sufficient
+  header('Content-Length: ' . strlen($data));
+  header('Connection: close');
+  echo $data;
+  exit();
+}
+
 if(isset($_GET["confirm"])){
   $phone = $_GET["phone"];
   $_->confirm($con,$phone);
@@ -11,7 +31,12 @@ if(isset($_GET["confirm"])){
 
 
 $A = $_->getall($con);   
-
+$confirmed = 0;
+for ($i=0; $i < count($A); $i++) { 
+  if(intval($A[$i]->confirmed) == 1){
+    $confirmed += 1;
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +59,26 @@ $A = $_->getall($con);
 </style>
 </head>
 <body> 
-<div class="container-fluid m-0 p-0">
-      
+<div class="container-fluid m-0 p-0" style="margin: 0;">
+    <div class="row">
+      <div class="col-12 m-3" style="">
+        <img src="./logo.png" id="logo">
+      </div>
+      <div class="col-12">
+        <h4 id='title' class="pl-4">Momo Number Confirmation</h4>
+      </div>
+    </div>
+
+    <div id="mycard" class="card ml-4  mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Summary</h5>
+            <p class="card-text">Total: <span class="badge badge-warning text-white float-right"><?php echo count($A); ?></span></p>
+            <p class="card-text">Confirmed: <span class="badge badge-warning text-white float-right"><?php echo $confirmed; ?></span></p>
+            <p class="card-text">Unconfirmed: <span class="badge badge-warning text-white float-right"><?php echo count($A)-$confirmed ?></span></p>
+            <a href="./index.php?download=1" class="btn btn-warning text-light">Download List</a>
+        </div>
+    </div>
+
     <table class="table ">
       <thead >
         <tr class="bg-warning text-light"> 
