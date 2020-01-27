@@ -6,14 +6,14 @@ $_ = new Users();
 
 if(isset($_GET["download"])){
   $all_students = $_->getall($con);  
-  $data = "#,Name,Phone,Confirmed\n";
+  $data = "#,Name,Phone,Phone Changed,Confirmed\n";
   for ($i=0; $i < count($all_students); $i++) { 
       $__ = $all_students[$i];
       $confirmed = "No";
       if(intval($__->confirmed) == 1){
         $confirmed = "Yes";
       }
-      $line = strval($i+1) . "," .  $__->name.",".$__->phone.",".$confirmed."\n";
+      $line = strval($i+1) . "," .  $__->name.",".$__->phone . "," . $__->changed .",".$confirmed."\n";
       $data = $data . $line;
   } 
   header('Content-Disposition: attachment; filename="file.csv"');
@@ -75,7 +75,7 @@ for ($i=0; $i < count($A); $i++) {
             <p class="card-text">Total: <span class="badge badge-warning text-white float-right"><?php echo count($A); ?></span></p>
             <p class="card-text">Confirmed: <span class="badge badge-warning text-white float-right"><?php echo $confirmed; ?></span></p>
             <p class="card-text">Unconfirmed: <span class="badge badge-warning text-white float-right"><?php echo count($A)-$confirmed ?></span></p>
-            <a href="./index.php?download=1" class="btn btn-warning text-light">Download Updated List</a>
+            <a href="./index.php?download=1" class="btn btn-warning text-light">Download List</a>
         </div>
     </div>
 
@@ -85,6 +85,7 @@ for ($i=0; $i < count($A); $i++) {
           <th scope="col">#</th>
           <th scope="col">Name</th>
           <th scope="col">Phone</th>
+          <th scope="col">Phone Changed</th>
           <th scope="col">Edit</th>
           <th scope="col">Confirmed</th>
         </tr>
@@ -102,7 +103,8 @@ for ($i=0; $i < count($A); $i++) {
         <tr class="<?php echo $bg ?>" id="<?php echo $u->phone; ?>"> 
           <td><?php echo $i+1; ?></td>
           <td><?php echo $u->name; ?></td>
-          <td><?php echo $u->phone; ?></td> 
+          <td><?php echo $u->phone; ?></td>
+          <td><?php echo $u->changed; ?></td> 
           <td><a href="edit.php?phone=<?php echo $u->phone; ?>" class="btn btn-warning text-white">Edit <i class="fa fa-edit"></i></a></td>
           <?php
           if(intval($u->confirmed) == 1){
