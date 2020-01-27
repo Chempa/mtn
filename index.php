@@ -39,6 +39,7 @@ for ($i=0; $i < count($A); $i++) {
   }
   if($A[$i]->changed == "Yes"){
     $CHANGED +=1;
+    $A[$i]->changed = "<span class='badge badge-warning text-white'>Yes</span>"
   }
 
 }
