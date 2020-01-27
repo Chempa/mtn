@@ -32,10 +32,15 @@ if(isset($_GET["confirm"])){
 
 $A = $_->getall($con);   
 $confirmed = 0;
+$CHANGED = 0;
 for ($i=0; $i < count($A); $i++) { 
   if(intval($A[$i]->confirmed) == 1){
     $confirmed += 1;
   }
+  if($A[$i]->changed == "Yes"){
+    $CHANGED +=1;
+  }
+
 }
 ?>
 
@@ -75,7 +80,9 @@ for ($i=0; $i < count($A); $i++) {
             <p class="card-text">Total: <span class="badge badge-warning text-white float-right"><?php echo count($A); ?></span></p>
             <p class="card-text">Confirmed: <span class="badge badge-warning text-white float-right"><?php echo $confirmed; ?></span></p>
             <p class="card-text">Unconfirmed: <span class="badge badge-warning text-white float-right"><?php echo count($A)-$confirmed ?></span></p>
+            <p class="card-text">Number of Edited Phones: <span class="badge badge-warning text-white float-right"><?php echo $CHANGED; ?></span></p>
             <a href="./index.php?download=1" class="btn btn-warning text-light">Download List</a>
+            
         </div>
     </div>
 
