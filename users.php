@@ -7,6 +7,7 @@
 			$this->phone = "";
 			$this->name = "";
 			$this->confirmed = "";
+			$this->changed = "";
 		}
 
 
@@ -66,6 +67,24 @@
 
 		}
 
+		public function getoriginal($con, $name)
+		{
+			$query = "
+				select * from original
+				where name = '$name'";
+			$result = mysqli_query($con,$query) or die(mysqli_error());
+			$rows = mysqli_num_rows($result);
+			$u = new Users();
+			if($row = mysqli_fetch_assoc($result)){
+                $u->phone = $row['phone'];
+                $u->name = $row['name']; 
+			}else{ 
+				return NULL;
+			}
+			return $u;
+
+		}
+
 		public function getall($con){
 			$query = "select * from users";
 			$result = mysqli_query($con,$query) or die(mysql_error());
@@ -76,6 +95,12 @@
 				$usr->name = $row["name"];
 				$usr->phone= $row["phone"]; 
 				$usr->confirmed = $row['confirmed']; 
+				$u = $this->getoriginal($con, $usr->name);
+				if($u->phone == $usr->phone){
+					$usr->changed = "No";
+				}else{
+					$usr->changed = "Yes";
+				}
 				array_push($all_users, $usr);
 
 			}
